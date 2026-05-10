@@ -1,0 +1,22 @@
+body { text-align: center; font-family: sans-serif; touch-action: none; }
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 300px;
+    margin: 20px auto;
+}
+.hole {
+    width: 100px;
+    height: 100px;
+    background: #8b4513; /* Brown hole */
+    border-radius: 50%;
+    position: relative;
+}
+.mole {
+    background: #ff6347; /* Red "mole" */
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    margin: 10%;
+}
