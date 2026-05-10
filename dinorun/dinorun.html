@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        body { background: black; color: #00FF41; font-family: monospace; text-align: center; margin: 0; overflow: hidden; touch-action: manipulation; }
+        canvas { border: 1px solid #00FF41; width: 95%; max-width: 400px; background: #050505; margin-top: 10px; }
+        #overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; z-index: 10; }
+    </style>
+</head>
+<body>
+    <div id="overlay"><h1>TAP TO START</h1></div>
+    <h1>DINO RUN!</h1>
+    <canvas id="game" width="300" height="150"></canvas>
+
+    <script>
+        const canvas = document.getElementById('game'), ctx = canvas.getContext('2d'), overlay = document.getElementById('overlay');
+        let dinoY = 120, v = 0, g = 0.6, j = false, obsX = 300, s = 0, over = false, active = false;
+        
+        // Removed %%HIGHSCORE%% and replaced with local storage
+        let topS = localStorage.getItem('dinoHighScore') || 0; 
+        let recordBroken = false;
+
+        // Combined touch and click for easier desktop testing
+        const handleInput = () => {
+            if (!active) { active = true; overlay.style.display = 'none'; update(); }
+            if (!j && !over) { v = -9; j = true; } 
+            if (over) location.reload();
+        };
+
+        window.addEventListener('touchstart', handleInput);
+        window.addEventListener('mousedown', handleInput);
+
+        function update() {
+            if (!active || over) return;
+
+            ctx.clearRect(0, 0, 300, 150);
+
+            // Floor
+            ctx.strokeStyle = '#00FF41';
+            ctx.strokeRect(0, 140, 300, 1);
+
+            // Dino
+            ctx.fillStyle = '#00FF41';
+            ctx.fillRect(30, dinoY, 20, 20);
+
+            // Physics
+            v += g;
+            dinoY += v;
+            if (dinoY > 120) { dinoY = 120; j = false; }
+
+            // Obstacle
+            ctx.fillStyle = 'red';
+            ctx.fillRect(obsX, 125, 15, 15);
+
+            // Movement
+            let currentSpeed = Math.min(9.0, 5 + (s * 0.08));
+            obsX -= currentSpeed;
+
+            if (obsX < -20) {
+                let minGap = Math.max(180, 350 - (s * 3));
+                let randomExtra = 50 + Math.random() * 250;
+                obsX = minGap + randomExtra;
+                s++;
+            }
+
+            // High Score Logic
+            if (s > topS) {
+                topS = s;
+                recordBroken = true;
+                localStorage.setItem('dinoHighScore', topS); // Save to browser
+            }
+
+            // Collision
+            if (obsX < 50 && obsX > 15 && dinoY > 105) {
+                over = true;
+                ctx.fillStyle = 'white';
+                ctx.font = "20px monospace";
+                ctx.fillText(recordBroken ? "NEW HIGH SCORE!" : "GAME OVER", 60, 75);
+            }
+
+            ctx.fillStyle = '#00FF41';
+            ctx.font = "14px monospace";
+            ctx.fillText("SCORE: " + s + " | TOP: " + topS, 10, 20);
+
+            requestAnimationFrame(update);
+        }
+    </script>
+</body>
+</html>
