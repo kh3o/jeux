@@ -28,11 +28,16 @@
             if (over) location.reload();
         };
 
-        window.addEventListener('touchstart', (e) => {
+        overlay.addEventListener('touchstart', (e) => {
             e.preventDefault();
             handleInput();
         }, { passive: false });
-        window.addEventListener('mousedown', handleInput);
+        overlay.addEventListener('mousedown', handleInput);
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            handleInput();
+        }, { passive: false });
+        canvas.addEventListener('mousedown', handleInput);
 
         function update() {
             if (!active || over) return;
