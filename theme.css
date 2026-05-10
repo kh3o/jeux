@@ -1,0 +1,66 @@
+:root {
+    --bg: #000000;
+    --surface: #050505;
+    --text: #00FF41;
+    --accent: #00FF41;
+    --accent-soft: rgba(0, 255, 65, 0.15);
+    --border: #00FF41;
+    --secondary: #003300;
+    --hole-bg: #003300;
+    --mole-bg: #00FF41;
+    --canvas-bg: #050505;
+    --button-bg: rgba(0, 255, 65, 0.08);
+    --button-hover: rgba(0, 255, 65, 0.18);
+    --button-radius: 10px;
+    --shadow: 0 0 20px rgba(0, 255, 65, 0.15);
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: monospace;
+    margin: 0;
+    min-height: 100vh;
+}
+
+button,
+.my-button {
+    color: var(--text);
+    background: var(--button-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--button-radius);
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover,
+.my-button:hover {
+    background: var(--button-hover);
+    box-shadow: var(--shadow);
+}
+
+h1,
+p,
+span {
+    color: var(--text);
+}
+
+nav {
+    background: var(--surface);
+    padding: 10px;
+}
+
+nav span,
+nav button {
+    color: var(--text);
+}
+
+#main-content {
+    padding: 20px;
+    text-align: center;
+}
+
+::selection {
+    background: rgba(0, 255, 65, 0.25);
+}

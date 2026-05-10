@@ -1,14 +1,16 @@
 <body>
+    <link rel="stylesheet" href="theme.css">
 
     <!-- 1. Navigation Bar (Stays at the top) -->
-    <nav style="background: #333; padding: 10px; display: flex; gap: 10px;">
+    <nav style="background: var(--surface, #111); display: flex; gap: 10px; align-items: center;">
         <button class="my-button" style="padding: 5px 15px;" onclick="goHome()">🏠 Home</button>
-        <span style="color: white; align-self: center;">My Game Hub</span>
+        <span style="color: var(--text, #fff); align-self: center;">My Game Hub</span>
+        <button class="my-button" style="margin-left: auto; padding: 5px 15px;" onclick="cycleTheme()">🎨 Theme</button>
     </nav>
 
     <!-- 2. Main Content Area -->
     <div id="main-content" style="padding: 20px; text-align: center;">
-        <h1>Game Collection v.003</h1>
+        <h1>Game Collection v.004</h1>
         
         <!-- Add all your mini-game buttons here -->
         <button class="my-button" onclick="loadGame('whackamole/whackamole.html')">Whackamole!</button>
@@ -33,6 +35,14 @@
             content.style.display = 'block';// Show the menu
             frame.src = "";                 // Stop the game from running in background
         }
-    </script>
 
+        function cycleTheme() {
+            if (window.gameTheme && typeof gameTheme.nextTheme === 'function') {
+                gameTheme.nextTheme();
+            } else if (window.gameTheme && typeof gameTheme.randomTheme === 'function') {
+                gameTheme.randomTheme();
+            }
+        }
+    </script>
+    <script src="theme.js" defer></script>
 </body>
