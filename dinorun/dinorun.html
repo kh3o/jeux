@@ -28,7 +28,10 @@
             if (over) location.reload();
         };
 
-        window.addEventListener('touchstart', handleInput);
+        window.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            handleInput();
+        }, { passive: false });
         window.addEventListener('mousedown', handleInput);
 
         function update() {
